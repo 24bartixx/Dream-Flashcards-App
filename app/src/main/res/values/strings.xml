@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Dream Flashcards</string>
+
+    <!-- Login Activity -->
+    <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="sign_in_with_facebook">Sign in with Facebook</string>
+    <string name="sign_in_with_email">Sign in with Email</string>
+
+    <!-- Facebook variables -->
+    <string name="facebook_app_id">399567662122816</string>
+    <string name="fb_login_protocol_scheme">fb399567662122816</string>
+    <string name="facebook_client_token">b83ea3544feabcf63d387a8e6da4e3ee</string>
+
+
+</resources>

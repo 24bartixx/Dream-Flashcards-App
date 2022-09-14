@@ -1,0 +1,76 @@
+{
+  "project_info": {
+    "project_number": "325828659295",
+    "project_id": "dream-flashcards-app",
+    "storage_bucket": "dream-flashcards-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:325828659295:android:a7a17712bbff9f735473ea",
+        "android_client_info": {
+          "package_name": "com.example.dreamflashcards"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "325828659295-mq5m442k1usjr9udtcba9tuceet3j0d9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUcv9u2kPevTIfPDthPty6KzmK3QmGjik"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "325828659295-mq5m442k1usjr9udtcba9tuceet3j0d9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:325828659295:android:f62288727de937a35473ea",
+        "android_client_info": {
+          "package_name": "com.example.dreamflashcardsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "325828659295-e111a6qlhj0g3ssefbn8dnu1gocujqlu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dreamflashcardsapp",
+            "certificate_hash": "d65b080d2698f956c7565c5de1bee72cf0e39487"
+          }
+        },
+        {
+          "client_id": "325828659295-mq5m442k1usjr9udtcba9tuceet3j0d9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUcv9u2kPevTIfPDthPty6KzmK3QmGjik"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "325828659295-mq5m442k1usjr9udtcba9tuceet3j0d9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
