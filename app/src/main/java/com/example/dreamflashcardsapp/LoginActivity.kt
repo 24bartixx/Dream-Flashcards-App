@@ -95,6 +95,11 @@ class LoginActivity : AppCompatActivity() {
             facebookLogin()
         }
 
+        /** Email Password authorization */
+        binding.emailSignInButton.setOnClickListener {
+            startActivity(Intent(this, EmailPasswordActivity::class.java))
+        }
+
     }
 
     /** check if logged */
