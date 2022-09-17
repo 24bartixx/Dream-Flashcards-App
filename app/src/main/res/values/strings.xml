@@ -12,6 +12,13 @@
     <string name="repeat_password_hint">Repeat password</string>
     <string name="sign_in_text">Sign In</string>
     <string name="sign_up_text">Sign Up</string>
+    <string name="forgot_password">Forgot password?</string>
+
+    <!-- Sets Fragment -->
+    <string name="add_new_set">Add new set</string>
+
+    <!-- Set Item -->
+    <string name="words_text">Words: </string>
 
     <!-- Facebook variables -->
     <string name="facebook_app_id">399567662122816</string>

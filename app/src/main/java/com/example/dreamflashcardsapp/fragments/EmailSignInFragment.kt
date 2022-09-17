@@ -1,12 +1,16 @@
 package com.example.dreamflashcardsapp.fragments
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
+import android.text.SpannableStringBuilder
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.dreamflashcardsapp.MainActivity
 import com.example.dreamflashcardsapp.databinding.FragmentEmailSignInBinding
 import com.google.firebase.auth.FirebaseAuth
 
@@ -45,6 +49,8 @@ class EmailSignInFragment : Fragment() {
         progressDialog.setMessage("Please wait...")
         progressDialog.setCanceledOnTouchOutside(false)
 
+        binding.forgotPassword.setPadding(8, 0, 8, 50)
+
         // handle login button click
         binding.loginButton.setOnClickListener {
             validateData()
@@ -69,9 +75,10 @@ class EmailSignInFragment : Fragment() {
 
             // if empty password, trigger an error
             Log.e(TAG, "Empty password during signing in")
-            binding.passwordInputLayout.isPasswordVisibilityToggleEnabled = false
             binding.passwordInputLayout.error = "Please enter your password"
 
+        } else {
+            logIn()
         }
 
     }
@@ -80,6 +87,35 @@ class EmailSignInFragment : Fragment() {
     private fun hideAllErrors(){
         binding.emailInputLayout.isErrorEnabled = false
         binding.passwordInputLayout.isErrorEnabled = false
+    }
+
+    /** email and password authorization function */
+    private fun logIn(){
+
+        progressDialog.show()
+
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnSuccessListener {
+
+                // hide ProgressDialog
+                progressDialog.dismiss()
+                Log.i(TAG, "User logged with email: ${auth.currentUser!!.email}")
+                Toast.makeText(requireContext(), "Logged with email: ${auth.currentUser!!.email}", Toast.LENGTH_SHORT).show()
+
+                // idk if works
+                // go to the app
+                startActivity(Intent(requireContext(), MainActivity::class.java))
+
+            }
+            .addOnFailureListener { e ->
+
+                // hide ProgressDialog
+                progressDialog.dismiss()
+                Log.e(TAG, "Authorization failed due to: ${e.message}")
+                Toast.makeText(requireContext(), "Wrong email or password", Toast.LENGTH_LONG).show()
+                binding.passwordInputLayout.editText?.text = SpannableStringBuilder("")
+
+            }
     }
 
 }

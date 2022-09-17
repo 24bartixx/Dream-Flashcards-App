@@ -13,7 +13,8 @@
         android:theme="@style/Theme.DreamFlashcards">
         <activity
             android:name=".EmailPasswordActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".LoginActivity"
             android:exported="true"
