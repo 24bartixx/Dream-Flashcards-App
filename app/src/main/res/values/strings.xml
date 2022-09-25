@@ -14,8 +14,12 @@
     <string name="sign_up_text">Sign Up</string>
     <string name="forgot_password">Forgot password?</string>
 
+    <!-- App Menu -->
+    <string name="sign_out_title">Sign out</string>
+
     <!-- Sets Fragment -->
     <string name="add_new_set">Add new set</string>
+    <string name="filter_hint">Filter</string>
 
     <!-- Set Item -->
     <string name="words_text">Words: </string>
