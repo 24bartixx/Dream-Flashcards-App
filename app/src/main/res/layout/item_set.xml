@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="12dp"
+    android:layout_margin="8dp"
     app:cardElevation="8dp"
     app:cardCornerRadius="12dp">
 
@@ -20,9 +20,9 @@
             android:id="@+id/set_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="8dp"
-            android:paddingBottom="4dp"
-            android:textSize="20sp"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="8dp"
+            android:textSize="22sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/set_icon"
@@ -34,8 +34,11 @@
             android:id="@+id/words"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="8dp"
+            android:paddingHorizontal="16dp"
+
+            android:paddingBottom="16dp"
             android:textSize="16sp"
+            android:textStyle="bold"
             android:text="@string/words_text"
             app:layout_constraintTop_toBottomOf="@id/set_name"
             app:layout_constraintStart_toStartOf="parent"
@@ -45,6 +48,8 @@
             android:id="@+id/words_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@id/words"
             app:layout_constraintTop_toBottomOf="@id/set_name"
@@ -63,10 +68,11 @@
             app:layout_constraintEnd_toEndOf="parent" />
 
         <View
+            android:id="@+id/color_view"
             android:layout_width="match_parent"
-            android:layout_height="7dp"
+            android:layout_height="6dp"
             android:layout_marginTop="12dp"
-            android:background="@color/yellow"
+            android:background="?attr/colorSecondary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/words" />
 

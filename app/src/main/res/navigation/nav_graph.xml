@@ -9,6 +9,27 @@
     <fragment
         android:id="@+id/setsFragment"
         android:name="com.example.dreamflashcardsapp.fragments.app.SetsFragment"
-        android:label="fragment_sets"
-        tools:layout="@layout/fragment_sets" />
+        android:label="Dream Flashcards"
+        tools:layout="@layout/fragment_sets" >
+        <action
+            android:id="@+id/action_setsFragment_to_createSetFragment"
+            app:destination="@id/createSetFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createSetFragment"
+        android:name="com.example.dreamflashcardsapp.fragments.app.CreateSetFragment"
+        android:label="Dream Flashcards"
+        tools:layout="@layout/fragment_create_set" >
+        <action
+            android:id="@+id/action_createSetFragment_to_flashcardsFragment"
+            app:destination="@id/flashcardsFragment"
+            app:restoreState="true"
+            app:popUpToSaveState="true"
+            app:popUpTo="@id/setsFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/flashcardsFragment"
+        android:name="com.example.dreamflashcardsapp.fragments.app.FlashcardsFragment"
+        android:label="Dream Flashcards"
+        tools:layout="@layout/fragment_flashcards" />
 </navigation>

@@ -20,6 +20,13 @@
     <!-- Set Item -->
     <string name="words_text">Words: </string>
 
+    <!-- Create Set Fragment -->
+    <string name="create_set">Create set</string>
+    <string name="set_name">Set name</string>
+    <string name="choose_color">Choose color</string>
+    <string name="choose_set_name">Choose the name of your set</string>
+    <string name="choose_set_color">Choose the color of your set</string>
+
     <!-- Facebook variables -->
     <string name="facebook_app_id">399567662122816</string>
     <string name="fb_login_protocol_scheme">fb399567662122816</string>

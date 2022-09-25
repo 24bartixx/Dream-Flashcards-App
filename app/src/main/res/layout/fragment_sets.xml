@@ -24,7 +24,7 @@
        android:contentDescription="@string/add_new_set"
        android:src="@drawable/ic_add_flashcard"
        app:backgroundTint="?attr/colorPrimary"
-       app:fabCustomSize="72dp"
+       app:fabCustomSize="64dp"
        app:tint="?attr/colorOnPrimary"/>
 
 </FrameLayout>

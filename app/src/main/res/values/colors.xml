@@ -2,12 +2,22 @@
 <resources>
 
     <!-- App colors -->
-    <color name="primary_light">#3F805A</color>
-    <color name="primary">#326C4A</color>
-    <color name="primary_dark">#2D583E</color>
-    <color name="secondary_light">#C46946</color>
-    <color name="secondary">#C25B33</color>
-    <color name="secondary_dark">#B14A22</color>
+    <color name="primary_light">#4F916B</color>
+    <color name="primary">#3F805A</color>
+    <color name="primary_dark">#326C4A</color>
+    <color name="secondary_light">#E7996F</color>
+    <color name="secondary">#D6885E</color>
+    <color name="secondary_dark">#B16A44</color>
+    <color name="error_red">#962d2d</color>
+
+    <!-- set colors -->
+    <!-- if you change something, you need to change references in SetsAdapter -->
+    <color name="set_option_purple">#AA7834D6</color>
+    <color name="set_option_blue">#AA287EC4</color>
+    <color name="set_option_yellow">#AAEEBD0A</color>
+    <color name="set_option_orange">#AAE67418</color>
+    <color name="set_option_red">#AAC61E0F</color>
+
     <color name="yellow">#bf9319</color>
     <color name="red">#962d2d</color>
 

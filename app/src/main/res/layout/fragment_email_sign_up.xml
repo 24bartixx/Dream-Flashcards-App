@@ -81,7 +81,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/repeat_password_input_layout"
-        android:text="@string/sign_in_text"
+        android:text="@string/sign_up_text"
         style="@style/AppButton"/>
 
 
