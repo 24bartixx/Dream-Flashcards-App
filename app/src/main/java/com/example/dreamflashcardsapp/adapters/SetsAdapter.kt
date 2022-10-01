@@ -9,9 +9,13 @@ import com.example.dreamflashcardsapp.databinding.ItemSetBinding
 import com.example.dreamflashcardsapp.model.FlashcardsSet
 
 
-class SetsAdapter(): ListAdapter<FlashcardsSet, SetsAdapter.SetsViewHolder>(DiffCallback) {
+class SetsAdapter(private var optionsMenuClickListener: OptionsMenuClickListener): ListAdapter<FlashcardsSet, SetsAdapter.SetsViewHolder>(DiffCallback) {
 
-    class SetsViewHolder(private var binding: ItemSetBinding): RecyclerView.ViewHolder(binding.root){
+    interface OptionsMenuClickListener {
+        fun onOptionsMenuClicked(position: Int)
+    }
+
+    class SetsViewHolder(var binding: ItemSetBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(set: FlashcardsSet){
 
             binding.setName.text = set.setName
@@ -28,6 +32,10 @@ class SetsAdapter(): ListAdapter<FlashcardsSet, SetsAdapter.SetsViewHolder>(Diff
 
         val set = getItem(position)
         holder.bind(set)
+
+        holder.binding.setsOptions.setOnClickListener {
+            optionsMenuClickListener.onOptionsMenuClicked(position)
+        }
 
     }
 

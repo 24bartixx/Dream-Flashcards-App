@@ -18,16 +18,12 @@ class ModifySetViewModel: ViewModel() {
     private val _setName = MutableLiveData<String>()
     private val setName: LiveData<String> = _setName
 
-    // color of the set
-    private val _setColor = MutableLiveData<String>()
-    private val setColor: LiveData<String> = _setColor
-
     // set to modify
     private val _modifySet = MutableLiveData<FlashcardsSet>(FlashcardsSet("", "", "", "", "", "", ""))
     val modifySet: LiveData<FlashcardsSet> = _modifySet
 
     // tells if set is already created or not
-    private val _setCreated = MutableLiveData<Boolean>()
+    private val _setCreated = MutableLiveData(false)
     val setCreated: LiveData<Boolean> = _setCreated
 
 
@@ -47,12 +43,6 @@ class ModifySetViewModel: ViewModel() {
         _setCreated.value = false
     }
 
-    /** set new color of the set */
-    fun setColor(newColor: String){
-        _setColor.value = newColor
-        Log.i(TAG, "New color set: $newColor")
-    }
-
     /** set name of the set */
     fun setSetName(newName: String) {
         _setName.value = newName
@@ -60,9 +50,9 @@ class ModifySetViewModel: ViewModel() {
     }
 
     /** set setCreated */
-    fun setSetCreated(newSetCreated: Boolean) {
-        _setCreated.value = newSetCreated
-        Log.i(TAG, "New setCreated: $newSetCreated")
+    fun setSetCreated(newSetCreatedBoolean: Boolean) {
+        _setCreated.value = newSetCreatedBoolean
+        Log.i(TAG, "New setCreated: $newSetCreatedBoolean")
     }
 
     /** add set to Firestore */
@@ -71,13 +61,15 @@ class ModifySetViewModel: ViewModel() {
         _setCreated.value = false
         _modifySet.value = FlashcardsSet("", "", "", "", "", "", "")
 
+        val currentTime = System.currentTimeMillis()
+
         val newSetData = hashMapOf(
             "set name" to setName.value,
             "creator" to auth.currentUser!!.uid,
             "number of words" to 0,
             "learned" to 0,
             "next" to 1,
-            "color" to setColor.value
+            "current time" to currentTime
         )
 
         firestore.collection("Sets").add(newSetData)
@@ -90,17 +82,17 @@ class ModifySetViewModel: ViewModel() {
                     setID = documentReference.id,
                     setName = setName.value!!,
                     creator = auth.currentUser!!.uid,
-                    color = setColor.value!!,
                     wordsCount = "0",
                     learned = "0",
-                    next = "1"
+                    next = "1",
+                    currentTime = currentTime.toString()
                 )
+
+
 
             }
             .addOnFailureListener { e ->
-
                 Log.d(TAG, "Cannot add set to collection due to: ${e.message}")
-
             }
 
     }

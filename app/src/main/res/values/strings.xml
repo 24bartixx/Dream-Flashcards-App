@@ -17,12 +17,17 @@
     <!-- App Menu -->
     <string name="sign_out_title">Sign out</string>
 
+    <!-- Set Card Options Menu -->
+    <string name="modify_set_text">Modify set</string>
+    <string name="delete_set_text">Delete set</string>
+
     <!-- Sets Fragment -->
     <string name="add_new_set">Add new set</string>
     <string name="filter_hint">Filter</string>
 
     <!-- Set Item -->
     <string name="words_text">Words: </string>
+    <string name="option_menu_sign">⋮</string>
 
     <!-- Create Set Fragment -->
     <string name="create_set">Create set</string>

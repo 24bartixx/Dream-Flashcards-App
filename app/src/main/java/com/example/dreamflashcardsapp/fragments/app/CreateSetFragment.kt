@@ -1,18 +1,14 @@
 package com.example.dreamflashcardsapp.fragments.app
 
+import android.app.ProgressDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.example.dreamflashcardsapp.R
 import com.example.dreamflashcardsapp.databinding.FragmentCreateSetBinding
 import com.example.dreamflashcardsapp.viewmodels.ModifySetViewModel
 
@@ -24,6 +20,9 @@ class CreateSetFragment : Fragment() {
 
     // ModifySetFragment
     private val modifySetViewModel: ModifySetViewModel by activityViewModels()
+
+    // ProgressDialog
+    private lateinit var progressDialog: ProgressDialog
 
     var setName = ""
 
@@ -44,38 +43,14 @@ class CreateSetFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // configure the ProgressDialog
+        progressDialog = ProgressDialog(requireContext())
+        progressDialog.setTitle("Loading...")
+        progressDialog.setMessage("Preparing the set")
+        progressDialog.setCanceledOnTouchOutside(false)
+
         binding.createSetButton.setOnClickListener {
             createSet()
-        }
-
-        val colors = listOf("Purple", "Blue", "Yellow", "Orange", "Red")
-        binding.colorIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.set_option_purple))
-        modifySetViewModel.setColor("Purple")
-        val dropdownMenuAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_menu_color_item, colors)
-        (binding.colorDropdownMenu.editText as? AutoCompleteTextView)?.setAdapter(dropdownMenuAdapter)
-
-        binding.colorDropdownMenuText.setText(colors[0], false)
-
-        binding.colorDropdownMenuText.setOnItemClickListener { adapterView, view, i, l ->
-
-            val selected = binding.colorDropdownMenuText.text.toString()
-
-            Log.d(TAG, "Color option selected: $selected")
-
-            modifySetViewModel.setColor(selected)
-
-            var colorReference = ContextCompat.getColor(requireContext(), R.color.set_option_red)
-            when(selected){
-
-                "Red" -> { colorReference = ContextCompat.getColor(requireContext(), R.color.set_option_red) }
-                "Orange" -> { colorReference = ContextCompat.getColor(requireContext(), R.color.set_option_orange) }
-                "Yellow" -> { colorReference = ContextCompat.getColor(requireContext(), R.color.set_option_yellow) }
-                "Blue" -> { colorReference = ContextCompat.getColor(requireContext(), R.color.set_option_blue) }
-                "Purple" -> { colorReference = ContextCompat.getColor(requireContext(), R.color.set_option_purple) }
-            }
-
-            binding.colorIcon.setColorFilter(colorReference)
-
         }
 
     }
@@ -99,17 +74,20 @@ class CreateSetFragment : Fragment() {
         } else {
 
             Log.d(TAG, "Create set in Firestore")
-            Toast.makeText(requireContext(), "Creating new set!\nIt might take a while...", Toast.LENGTH_SHORT).show()
             modifySetViewModel.setSetName(setName)
             modifySetViewModel.addSetToFirestore()
 
             modifySetViewModel.setCreated.observe(this.viewLifecycleOwner) {
                 if(modifySetViewModel.setCreated.value == true){
 
+                    progressDialog.hide()
                     Log.d(TAG, "Going to the next screen")
                     val action = CreateSetFragmentDirections.actionCreateSetFragmentToFlashcardsFragment()
                     findNavController().navigate(action)
 
+                } else {
+                    hideEverything()
+                    progressDialog.show()
                 }
             }
 
@@ -120,6 +98,13 @@ class CreateSetFragment : Fragment() {
     /** hide all errors function */
     private fun hideErrors() {
         binding.setNameInputLayout.isErrorEnabled = false
+    }
+
+    /** hide everything when the progress dialog in on the screen function */
+    private fun hideEverything(){
+        binding.setNameInputLayout.visibility = View.INVISIBLE
+        binding.createSetButton.visibility = View.INVISIBLE
+        binding.createSetText.visibility = View.INVISIBLE
     }
 
 }
