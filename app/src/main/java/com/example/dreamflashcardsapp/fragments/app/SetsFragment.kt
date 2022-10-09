@@ -1,17 +1,14 @@
 package com.example.dreamflashcardsapp.fragments.app
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import android.widget.PopupMenu
 import android.widget.Toast
-import androidx.core.view.get
-import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -20,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.dreamflashcardsapp.R
 import com.example.dreamflashcardsapp.adapters.SetsAdapter
 import com.example.dreamflashcardsapp.databinding.FragmentSetsBinding
+import com.example.dreamflashcardsapp.model.FlashcardsSet
 import com.example.dreamflashcardsapp.viewmodels.ModifySetViewModel
 import com.example.dreamflashcardsapp.viewmodels.SetsViewModel
 
@@ -29,6 +27,10 @@ class SetsFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var recyclerView: RecyclerView
+
+    private lateinit var alertDialog: AlertDialog
+
+    private var setToDelete: FlashcardsSet = FlashcardsSet("", "", "", "", "", "", "")
 
     private val setsViewModel: SetsViewModel by activityViewModels()
     private val modifySetViewModel: ModifySetViewModel by activityViewModels()
@@ -52,6 +54,21 @@ class SetsFragment : Fragment() {
 
         setsViewModel.getSetsFromFirestore()
 
+        /** configure AlertDialog */
+        alertDialog = AlertDialog.Builder(requireContext())
+            .setTitle("Delete set")
+            .setMessage("Are you sure you want to delete this set?")
+            .setIcon(R.drawable.ic_alert_dialog_warning)
+            .setPositiveButton("Yes") { dialog, which ->
+
+                setsViewModel.deleteSetFlashcardsFromFirestore(setToDelete.setID)
+                setsViewModel.deleteSet(setToDelete)
+                Toast.makeText(requireContext(), "Set deleted...", Toast.LENGTH_SHORT).show()
+
+            }
+            .setNegativeButton("No"){ dialog, which -> }
+            .create()
+
         binding.addFloatingActionButton.setOnClickListener {
             val action = SetsFragmentDirections.actionSetsFragmentToCreateSetFragment()
             findNavController().navigate(action)
@@ -64,57 +81,38 @@ class SetsFragment : Fragment() {
 
         recyclerView = binding.setsRecyclerview
 
-        val adapter = SetsAdapter( object : SetsAdapter.OptionsMenuClickListener {
-
-            override fun onOptionsMenuClicked(position: Int) {
-                performOptionsMenuClick(position)
-            }
-
-        })
-
-        setsViewModel.sets.observe(this.viewLifecycleOwner){
-            if(!setsViewModel.sets.value.isNullOrEmpty()){
-                adapter.submitList(setsViewModel.sets.value)
-                Log.d(TAG, binding.setsRecyclerview.size.toString())
-            }
+        val adapter = SetsAdapter(requireContext()) { flashcardsSet, option ->
+            performActionOnSet(flashcardsSet, option)
         }
 
         recyclerView.adapter = adapter
+        setsViewModel.sets.observe(this.viewLifecycleOwner){ sets ->
+            Log.d(TAG, "Adapting sets list...")
+            sets.let {
+                if(!setsViewModel.sets.value.isNullOrEmpty()){
+
+                    Log.d(TAG, "Updating to ${setsViewModel.sets.value!!.size}")
+                    adapter.submitList(setsViewModel.sets.value!!)
+
+                    binding.setsRecyclerview.visibility = View.GONE
+                    binding.setsRecyclerview.visibility = View.VISIBLE
+                }
+            }
+        }
+
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
 
-    /** click handler for sets options */
-    private fun performOptionsMenuClick(position: Int){
+    private fun performActionOnSet(flashcardsSet: FlashcardsSet, option: String) {
 
-        Log.d(TAG, binding.setsRecyclerview.size.toString())
-
-        val popupMenu = PopupMenu(requireContext(), binding.setsRecyclerview[position%5])
-
-        popupMenu.inflate(R.menu.set_card_options_menu)
-
-        popupMenu.setOnMenuItemClickListener( object : PopupMenu.OnMenuItemClickListener {
-
-            override fun onMenuItemClick(menuItem: MenuItem?): Boolean {
-                when(menuItem?.itemId){
-
-                    R.id.modify_set -> {
-                        Toast.makeText(requireContext(), "Modify set with name: ${setsViewModel.sets.value!![position].setName}", Toast.LENGTH_SHORT).show()
-                        return true
-                    }
-
-                    R.id.delete_set -> {
-                        Toast.makeText(requireContext(), "Delete set with name: ${setsViewModel.sets.value!![position].setName}", Toast.LENGTH_SHORT).show()
-                        return true
-                    }
-
-                }
-
-                return false
-            }
-
-        })
-
-        popupMenu.show()
+        if(option == "Delete"){
+            setToDelete = flashcardsSet
+            alertDialog.show()
+        } else if(option == "Modify"){
+            modifySetViewModel.getFlashcardsToModify(flashcardsSet)
+            val action = SetsFragmentDirections.actionSetsFragmentToFlashcardsFragment()
+            findNavController().navigate(action)
+        }
 
     }
 

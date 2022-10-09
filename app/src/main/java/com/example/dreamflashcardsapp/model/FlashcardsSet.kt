@@ -7,5 +7,5 @@ data class FlashcardsSet (
     var wordsCount: String,
     var learned: String,
     var next: String,
-    val currentTime: String
+    val creationTime: String
 )

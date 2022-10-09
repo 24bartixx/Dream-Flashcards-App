@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_setsFragment_to_createSetFragment"
             app:destination="@id/createSetFragment" />
+        <action
+            android:id="@+id/action_setsFragment_to_flashcardsFragment"
+            app:destination="@id/flashcardsFragment" />
     </fragment>
     <fragment
         android:id="@+id/createSetFragment"
@@ -31,5 +34,15 @@
         android:id="@+id/flashcardsFragment"
         android:name="com.example.dreamflashcardsapp.fragments.app.FlashcardsFragment"
         android:label="Dream Flashcards"
-        tools:layout="@layout/fragment_flashcards" />
+        tools:layout="@layout/fragment_flashcards" >
+        <action
+            android:id="@+id/action_flashcardsFragment_to_addFlashcardFragment"
+            app:destination="@id/addFlashcardFragment"
+            app:restoreState="true"
+            app:popUpToSaveState="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/addFlashcardFragment"
+        android:name="com.example.dreamflashcardsapp.fragments.app.AddFlashcardFragment"
+        android:label="Dream Flashcards" />
 </navigation>

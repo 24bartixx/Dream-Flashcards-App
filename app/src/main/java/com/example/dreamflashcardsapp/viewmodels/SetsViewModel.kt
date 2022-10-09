@@ -35,7 +35,8 @@ class SetsViewModel: ViewModel() {
     /** get sets from Firestore */
     fun getSetsFromFirestore() {
 
-        firestore.collection("Sets").orderBy("current time").get()
+        firestore.collection("Sets").orderBy("time of creation")
+            .whereEqualTo("creator", auth.currentUser!!.uid).get()
             .addOnSuccessListener { querySnapshot ->
 
                 Log.d(TAG, "Sets to display retrieved: ${querySnapshot.documents}")
@@ -51,7 +52,7 @@ class SetsViewModel: ViewModel() {
                         wordsCount = set.data["number of words"].toString(),
                         learned = set.data["learned"].toString(),
                         next = set.data["next"].toString(),
-                        currentTime = set.data["current time"].toString()
+                        creationTime = set.data["current time"].toString()
                     )
 
                     list.add(flashcardsSet)
@@ -66,6 +67,62 @@ class SetsViewModel: ViewModel() {
                 Log.e(TAG, "Could not retrieve sets from Firestore due to: ${e.message}")
             }
 
+    }
+
+    /** delete flashcards form set from Firestore */
+    fun deleteSetFlashcardsFromFirestore(setID: String){
+
+        firestore.collection("Sets").document(setID)
+            .collection("Flashcards").document("FlashcardsDocument").delete()
+            .addOnSuccessListener {
+                Log.i(TAG, "Flashcards document successfully deleted!")
+                deleteSetFromFirestore(setID)
+            }
+            .addOnFailureListener { e -> Log.w(TAG, "Error deleting flashcards from set due to: ${e.message}") }
+
+    }
+
+    /** delete set from Firestore */
+    private fun deleteSetFromFirestore(setID: String){
+
+        firestore.collection("Sets").document(setID).delete()
+            .addOnSuccessListener {
+                Log.i(TAG, "Set successfully deleted!")
+
+                val iterator = sets.value!!.iterator()
+
+                while(iterator.hasNext()){
+                    if(iterator.next().setID == setID){
+                        iterator.remove()
+                    }
+                }
+
+                _sets.value = sets.value
+
+
+            }
+            .addOnFailureListener { e -> Log.w(TAG, "Error deleting set due to: ${e.message}") }
+
+    }
+
+    /** add created set to the list */
+    fun addCreatedSet(flashcardsSet: FlashcardsSet){
+
+        var setList = sets.value
+        if(setList.isNullOrEmpty()){
+            setList = mutableListOf(flashcardsSet)
+        } else {
+            setList.add(flashcardsSet)
+        }
+
+        _sets.value = setList!!
+
+    }
+
+    fun deleteSet(flashcardsSet: FlashcardsSet){
+        var list = sets.value!!
+        list.remove(flashcardsSet)
+        _sets.value = list
     }
 
 }

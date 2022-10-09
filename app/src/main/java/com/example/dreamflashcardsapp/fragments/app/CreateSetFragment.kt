@@ -11,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.dreamflashcardsapp.databinding.FragmentCreateSetBinding
 import com.example.dreamflashcardsapp.viewmodels.ModifySetViewModel
+import com.example.dreamflashcardsapp.viewmodels.SetsViewModel
 
 class CreateSetFragment : Fragment() {
 
@@ -18,8 +19,11 @@ class CreateSetFragment : Fragment() {
     private lateinit var _binding: FragmentCreateSetBinding
     private val binding get() = _binding!!
 
-    // ModifySetFragment
+    // ModifySetViewModel
     private val modifySetViewModel: ModifySetViewModel by activityViewModels()
+
+    // SetsViewModel
+    private val setsViewModel: SetsViewModel by activityViewModels()
 
     // ProgressDialog
     private lateinit var progressDialog: ProgressDialog
@@ -80,6 +84,8 @@ class CreateSetFragment : Fragment() {
             modifySetViewModel.setCreated.observe(this.viewLifecycleOwner) {
                 if(modifySetViewModel.setCreated.value == true){
 
+                    setsViewModel.addCreatedSet(modifySetViewModel.modifySet.value!!)
+                    
                     progressDialog.hide()
                     Log.d(TAG, "Going to the next screen")
                     val action = CreateSetFragmentDirections.actionCreateSetFragmentToFlashcardsFragment()

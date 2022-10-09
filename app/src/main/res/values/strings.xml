@@ -21,6 +21,10 @@
     <string name="modify_set_text">Modify set</string>
     <string name="delete_set_text">Delete set</string>
 
+    <!-- Flashcard Card Options Menu -->
+    <string name="modify_flashcard_text">Modify flashcard</string>
+    <string name="delete_flashcard_text">Delete flashcard</string>
+
     <!-- Sets Fragment -->
     <string name="add_new_set">Add new set</string>
     <string name="filter_hint">Filter</string>
@@ -32,9 +36,19 @@
     <!-- Create Set Fragment -->
     <string name="create_set">Create set</string>
     <string name="set_name">Set name</string>
-    <string name="choose_color">Choose color</string>
     <string name="choose_set_name">Choose the name of your set</string>
     <string name="choose_set_color">Choose the color of your set</string>
+
+    <!-- Flashcards Fragment -->
+    <string name="done_button_text">Done</string>
+    <string name="add_flashcard_button_text">Add</string>
+
+    <!-- Add Flashcards Fragment -->
+    <string name="term_text">Term</string>
+    <string name="definition_text">Definition</string>
+    <string name="term_helper_text">Insert term</string>
+    <string name="definition_helper_text">Insert definition</string>
+    <string name="add_flashcard_text">Add flashcard</string>
 
     <!-- Facebook variables -->
     <string name="facebook_app_id">399567662122816</string>
